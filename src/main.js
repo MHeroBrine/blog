@@ -15,7 +15,6 @@ import store from './vuex/store.js'
 
 // antd
 import { Button, Layout, Menu, Card, Input, Select, Icon, Upload, Modal, Divider, message, notification } from 'ant-design-vue'
-// import _Home from '@ant-design-vue/icons/svg/fill/home.svg'
 import 'ant-design-vue/dist/antd.css'
 Vue.config.productionTip = false
 

@@ -1,7 +1,7 @@
 <template>
   	<div id="app">
-    	<div class="sidebar_left">
-			<v-Sidebar-left v-show="this.$store.state.global.SIDEBAR_INDEX"></v-Sidebar-left>
+    	<div class="sidebar_left" v-bind:class="{ show: isShow }">
+			<v-Sidebar-left v-show="this.$store.state.global.SIDEBAR_INDEX" ref="sidebar"></v-Sidebar-left>
 			<v-Sidebar-console v-show="this.$store.state.global.SIDEBAR_CONSOLE"></v-Sidebar-console>
 		</div>
 		<div class="container">
@@ -23,7 +23,28 @@
 
 	export default {
 		data() {
-			return {}
+			return {
+				isShow: false
+			}
+		},
+		mounted() {
+			this.touchListen();
+		},
+		methods: {
+			touchListen() {
+				let that = this;
+				let timeout = null;
+				
+				return function() {
+					that.$refs['sidebar'].$el.addEventListener('touchstart', function(e) {
+						that.isShow = true;
+					})
+
+					that.$refs['sidebar'].$el.addEventListener('touchend', function(e) {
+						that.isShow = false;
+					})
+				}()
+			}
 		},
 		components: {
 			'v-Sidebar-left': Sidebar_left,
@@ -48,13 +69,23 @@
 			flex: 1;
 			flex-direction: column;
 			::-webkit-scrollbar {
-				width: 5px;;
+				width: 5px;
 			}
 		}
 		
 	}
 
 	@media screen and (max-width: 1024px) {
+		.sidebar_left {
+			::-webkit-scrollbar {
+				width: 0px;
+			}
+		}
+		.show {
+			::-webkit-scrollbar {
+				width: 5px;
+			}
+		}
 		.cover {
 			position: fixed;
 			opacity: 0.6;

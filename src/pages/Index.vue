@@ -158,7 +158,7 @@
                     flex-direction: column;
                     background-color: #fff;
                     border-radius: 10px;
-                    margin: 10px 0 0 0;
+                    margin: 20px 0 0 0;
                     font-size: 15px;
                     padding: 25px 40px 0px 25px;
                     .comments {
@@ -290,6 +290,7 @@
                     flex: 1;
                     // height: 50px;
                     .item {
+                        margin: 10px 0 0 0;
                         padding: 15px;
                         .icons {
                             height: 30px;
