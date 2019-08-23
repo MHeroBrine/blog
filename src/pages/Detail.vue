@@ -1,6 +1,6 @@
 <template>
     <div id="detail">
-        <div class="markdown-body" v-html="data">
+        <div class="markdown-body main" v-html="data">
             
         </div>
     </div>
@@ -59,12 +59,24 @@
 
 <style lang="scss" scoped>
     #detail {
-        padding: 40px 50px 40px 50px;
+        padding: 20px 30px 20px 30px;
+        .main {
+            box-shadow: 0px 0px 10px 0px #eee;
+            border-radius: 10px;
+            background-color: #fff;
+            padding: 20px 40px 20px 40px;
+        }
     }
 
     @media screen and (max-width: 1024px) {
         #detail {
-            padding: 20px;
+            padding: 0px;
+            .main {
+                box-shadow: 0px 0px 10px 0px #eee;
+                border-radius: 0px;
+                background-color: #fff;
+                padding: 20px;
+            }
         }
     }
 </style>
