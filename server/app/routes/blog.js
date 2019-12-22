@@ -81,7 +81,6 @@ router.get('/withId', function (req, res) {
 // 添加博客
 router.post('/', function (req, res) {
     if (ID.getId()) {
-        console.log(ID.getId())
         let { title, body, introduce, category } = req.body;
         let blog = new Blog({
             title: title,
@@ -195,7 +194,7 @@ router.post('/thumb', function (req, res) {
 
 // 上传图片
 router.post('/upload', function (req, res) {
-    upload(req, res, function(err) {
+    upload(req, res, function (err) {
         if (err) {
             console.log(err);
             res.json({
@@ -212,10 +211,10 @@ router.post('/upload', function (req, res) {
     })
 })
 // 读取图片
-router.get('/img', function(req, res) {
+router.get('/img', function (req, res) {
     let path = req.query.path;
 
-    fs.readFile('./Images/' + path, 'binary', function(err, file) {
+    fs.readFile('./Images/' + path, 'binary', function (err, file) {
         if (err) {
             console.log(err);
         } else {

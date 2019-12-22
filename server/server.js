@@ -90,7 +90,9 @@ https.createServer(options, app).listen(port, function() {
 const userRoute = require('./app/routes/user');
 const categoryRoute = require('./app/routes/category');
 const blogRoute = require('./app/routes/blog');
+const draftRoute = require('./app/routes/draft');
 
 app.use('/user', userRoute);
 app.use('/category', categoryRoute);
 app.use('/blog', blogRoute);
+app.use('/draft', draftRoute);

@@ -3,13 +3,41 @@
         <div class="profile">
             <img src="@/assets/Sidebar/menu_2.svg" class="menu" alt="" @click="menuControl(false)">
             <div class="profile_temp">
-                <img src="../../assets/Sidebar/profile.png" class="profile_img">
+                <img src="../../assets/Sidebar/profile.png" class="profile_img" @click="pushTo('/introduce')">
             </div>
             <div class="info">
                 <p>Front End</p>
                 <h1>MHeroBrine</h1>
             </div>
-            <ul class="list">
+            <ul class="list" v-show="page.introduce">
+                <div>
+                    <li v-bind:class="{ active_info: active.info }">
+                        <img src="@/assets/Sidebar_introduce/info.svg" v-show="!active.info">
+                        <img src="@/assets/Sidebar_introduce/info_active.svg" v-show="active.info">
+                        <span @click="changePage_introduce(1)">个人简介</span>
+                    </li>
+                    <li class="hover_skill" v-bind:class="{ active_skill: active.skill }">
+                        <img src="@/assets/Sidebar_introduce/skill.svg" v-show="!active.skill">
+                        <img src="@/assets/Sidebar_introduce/skill_active.svg" v-show="active.skill">
+                        <span @click="changePage_introduce(2)">专业技能</span>
+                    </li>
+                    <li class="hover_project" v-bind:class="{ active_project: active.project }">
+                        <img src="@/assets/Sidebar_introduce/project.svg" v-show="!active.project">
+                        <img src="@/assets/Sidebar_introduce/project_active.svg" v-show="active.project">
+                        <span @click="changePage_introduce(3)">项目简历</span>
+                    </li>
+                    <li class="hover_message" v-bind:class="{ active_message: active.message }">
+                        <img src="@/assets/Sidebar_introduce/message.svg" v-show="!active.message">
+                        <img src="@/assets/Sidebar_introduce/message_active.svg" v-show="active.message">
+                        <span @click="changePage_introduce(4)">联系作者</span>
+                    </li>
+                    <li>
+                        <img src="@/assets/Sidebar_introduce/home.svg" alt="">
+                        <span @click="pushTo('/index')">返回主页</span>
+                    </li>
+                </div>
+            </ul>
+            <ul class="list" v-show="page.homePage">
                 <div v-bind:class="{ hide: isFrontHide }">
                     <li v-bind:class="{ active: active.ALL }">
                         <img src="../../assets/Sidebar/menu.svg" v-show="!active.ALL">
@@ -31,21 +59,11 @@
                         <img src="../../assets/Sidebar/js_active.svg" v-show="active.JS">
                         <span @click="changePage('JS')">JS</span>
                     </li>
-                    <!-- <li v-bind:class="{ active: active.NODE }">
-                        <img src="../../assets/Sidebar/nodejs.svg" v-show="!active.NODE">
-                        <img src="../../assets/Sidebar/nodejs_active.svg" v-show="active.NODE">
-                        <span @click="changePage('NODE')">Node</span>
-                    </li> -->
                     <li v-bind:class="{ active: active.PWA }">
                         <img src="../../assets/Sidebar/pwa.svg" v-show="!active.PWA">
                         <img src="../../assets/Sidebar/pwa_active.svg" v-show="active.PWA">
                         <span @click="changePage('PWA')">PWA</span>
                     </li>
-                    <!-- <li v-bind:class="{ active: active.Internet }">
-                        <img src="../../assets/Sidebar/net.svg" v-show="!active.Internet">
-                        <img src="../../assets/Sidebar/net_active.svg" v-show="active.Internet">
-                        <span @click="changePage('Internet')">Internet</span>
-                    </li> -->
                     <li v-bind:class="{ active: active.Other }">
                         <img src="../../assets/Sidebar/other.svg" v-show="!active.Other">
                         <img src="../../assets/Sidebar/other_active.svg" v-show="active.Other">
@@ -70,6 +88,10 @@
         data() {
             return {
                 // 进入后台页面
+                page: {
+                    homePage: true,
+                    introduce: false
+                },
                 isFrontHide: false,
                 // 当前显示
                 active: {
@@ -79,7 +101,12 @@
                     JS: false,
                     PWA: false,
                     Other: false,
-                    Console: false
+                    Console: false,
+
+                    info: true,
+                    skill: false,
+                    project: false,
+                    message: false
                 },
                 // 状态栏显示情况
                 menuStatus: true
@@ -89,6 +116,15 @@
             let that = this;
             VueEvent.$emit('controlMenu', function(val) {
                 that.menuStatus = val;
+            })
+            VueEvent.$on('sidebarState', (state) => {
+                this.page.homePage = false;
+                this.page.introduce = false;
+                this.page[state] = true;
+                this.active.info = true;
+                this.active.skill = false;
+                this.active.project = false;
+                this.active.message = false;
             })
             this.init();
         },
@@ -107,6 +143,30 @@
                     VueEvent.$emit('pageChange', address);
                 }, 0);
                 this.$router.push('/index');
+            },
+            // 转换侧栏标签（简历）
+            changePage_introduce(page) {
+                this.active.info = false;
+                this.active.skill = false;
+                this.active.project = false;
+                this.active.message = false;
+                switch (page) {
+                    case 1:
+                        this.active.info = true
+                        break;
+                    case 2:
+                        this.active.skill = true;
+                        break;
+                    case 3:
+                        this.active.project = true;
+                        break;
+                    case 4:
+                        this.active.message = true;
+                        break;
+                    default:
+                        break;
+                }
+                VueEvent.$emit('pageChange_introduce', page);
             },
             // 侧栏初始化
             init() {
@@ -146,6 +206,7 @@
             padding-top: 20px;
             padding-left: 30px;
             .profile_temp {
+                cursor: pointer;
                 position: relative;
                 width: 83px;
                 height: 83px;
@@ -221,6 +282,62 @@
                         right: 0;
                         top: 16px;
                         border-right: 15px solid #93ADDB;
+                        border-top: 10px solid transparent;
+                        border-bottom: 10px solid transparent;
+                    }
+                }
+                .active_info {
+                    span {
+                        color: #93ADDB;
+                    }
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        right: 0;
+                        top: 16px;
+                        border-right: 15px solid #93ADDB;
+                        border-top: 10px solid transparent;
+                        border-bottom: 10px solid transparent;
+                    }
+                }
+                .active_skill {
+                    span {
+                        color: #9C58B6;
+                    }
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        right: 0;
+                        top: 16px;
+                        border-right: 15px solid #9C58B6;
+                        border-top: 10px solid transparent;
+                        border-bottom: 10px solid transparent;
+                    }
+                }
+                .active_project {
+                    span {
+                        color: #26B1B6;
+                    }
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        right: 0;
+                        top: 16px;
+                        border-right: 15px solid #26B1B6;
+                        border-top: 10px solid transparent;
+                        border-bottom: 10px solid transparent;
+                    }
+                }
+                .active_message {
+                    span {
+                        color: #FF8000;
+                    }
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        right: 0;
+                        top: 16px;
+                        border-right: 15px solid #FF8000;
                         border-top: 10px solid transparent;
                         border-bottom: 10px solid transparent;
                     }

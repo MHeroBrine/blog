@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 module.exports = mongoose.model('Blog', new Schema({
-    title: { type: String, required },
-    body: { type: String, required },
-    introduce: { type: String, required },
-    category: { type: String, required },
+    title: { type: String, required: true },
+    body: { type: String, required: true },
+    introduce: { type: String, required: true },
+    category: { type: String, required: true },
 
     thumb: { type: Number, default: 0 },
     comment: { type: Array, default: [] },

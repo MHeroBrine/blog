@@ -28,6 +28,9 @@ const global = {
                 case 'detail':
                     state.SIDEBAR_INDEX = true;
                     break;
+                case 'introduce': 
+                    state.SIDEBAR_INDEX = true;
+                    break;
                 case 'login':
                     break;
                 case 'console':
@@ -42,9 +45,28 @@ const global = {
     }
 }
 
+const draft = {
+    state: {
+        // 缓存ID
+        id: null,
+        id_draft: null
+    },
+    mutations: {
+        // 添加博客缓存
+        IDsave(state, id) {
+            state.id = id;
+        },
+        // 草稿箱缓存
+        IDsave_draft(state, id) {
+            state.id_draft = id;
+        }
+    }
+}
+
 const store = new Vuex.Store({
     modules: {
-        global
+        global,
+        draft
     }
 })
 

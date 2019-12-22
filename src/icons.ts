@@ -8,3 +8,7 @@ export { default as Loading } from '@ant-design/icons/lib/outline/LoadingOutline
 export { default as Check } from '@ant-design/icons/lib/outline/CheckOutline'  
 export { default as Upload } from '@ant-design/icons/lib/outline/UploadOutline'
 export { default as Close } from '@ant-design/icons/lib/outline/CloseOutline'
+export { default as FileText } from '@ant-design/icons/lib/outline/FileTextOutline'
+export { default as Save } from '@ant-design/icons/lib/outline/SaveOutline'
+export { default as Left } from '@ant-design/icons/lib/outline/LeftOutline'
+export { default as Right } from '@ant-design/icons/lib/outline/RightOutline'

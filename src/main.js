@@ -14,7 +14,7 @@ import qs from 'qs'
 import store from './vuex/store.js'
 
 // antd
-import { Button, Layout, Menu, Card, Input, Select, Icon, Upload, Modal, Divider, message, notification } from 'ant-design-vue'
+import { Button, Layout, Menu, Card, Input, Select, Icon, Upload, Modal, Divider, message, notification, Table, Tag } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 Vue.config.productionTip = false
 
@@ -34,13 +34,15 @@ Vue.component(Icon.name, Icon);
 Vue.component(Upload.name, Upload);
 Vue.component(Modal.name, Modal);
 Vue.component(Divider.name, Divider);
+Vue.component(Table.name, Table);
+Vue.component(Tag.name, Tag);
 
 Vue.prototype.$message = message;
 Vue.prototype.$notification = notification;
 
 // Vue.use(Antd)
 
-// Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 // http request 拦截器
 Axios.interceptors.request.use(

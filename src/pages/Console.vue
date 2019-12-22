@@ -16,11 +16,15 @@
                     <a-icon type="plus" />
                     <span>添加博客</span>
                 </a-menu-item>
-                <a-menu-item key="3">
+                <a-menu-item key="3" @click="changePage('draft')">
+                    <a-icon type="file-text"/>
+                    <span>草稿箱</span>
+                </a-menu-item>
+                <a-menu-item key="4">
                     <a-icon type="lock" />
                     <span>权限管理</span>
                 </a-menu-item>
-                <a-menu-item key="4">
+                <a-menu-item key="5">
                     <a-icon type="line-chart" />
                     <span>访问统计</span>
                 </a-menu-item>
@@ -103,6 +107,7 @@
                                 <a-icon type="upload" />上传
                             </a-button>
                             </a-upload>
+                            <a-icon type="save" class="save" @click="pushDraft()"></a-icon>
                             <a-icon type="check" class="check" @click="pushBlog()"></a-icon>
                             <!-- <a-modal
                                 title="是否提交"
@@ -113,7 +118,22 @@
                             </a-modal> -->
                         </div>
                     </div>
-                </div>  
+                </div> 
+
+                <div v-show="page.draft" style="height: 100%">
+                    <a-table :columns="this.columns" :dataSource="this.data_draft">
+                        <a slot="name" slot-scope="text" href="javascript:;">{{text}}</a>
+                        <span slot="customTitle"><a-icon type="smile-o" /> Id</span>
+                        <span slot="tags" slot-scope="tags">
+                        <a-tag v-for="tag in tags" color="blue" :key="tag">{{tag}}</a-tag>
+                        </span>
+                        <span slot="action" slot-scope="text, record">
+                        <a href="javascript:;">Edit</a>
+                        <a-divider type="vertical" />
+                        <a @click="deleteDraft(text._id)">Delete</a>
+                        </span>
+                    </a-table>
+                </div> 
 
             </a-layout-content>
 
@@ -124,6 +144,7 @@
 
 <script>
     import Axios from 'axios'
+    import qs from 'qs'
 
     let marked = require('marked');
 
@@ -176,15 +197,38 @@
                 // 标签
                 categories: [],
 
+                // 草稿数据
+                columns: [{
+                    dataIndex: '_id',
+                    key: '_id',
+                    slots: { title: 'customTitle' },
+                    scopedSlots: { customRender: '_id' },
+                    }, {
+                    title: 'Title',
+                    dataIndex: 'title',
+                    key: 'title',
+                    }, {
+                    title: 'Category',
+                    key: 'category',
+                    dataIndex: 'category',
+                    scopedSlots: { customRender: 'tags' },
+                    }, {
+                    title: 'Action',
+                    key: 'action',
+                    scopedSlots: { customRender: 'action' }
+                }],
+                data_draft: [],
+
                 // 页面
                 page: {
-                    index: true,
-                    add: false
+                    index: false,
+                    add: false,
+                    draft: true,
                 },
                 // 浮窗
                 float: {
                     visible: false
-                }
+                },
             }
         },
         mounted() {
@@ -210,6 +254,17 @@
                         }
                     })
             },
+            // 获取所有草稿数据
+            getDraft() {
+                Axios.get(this.URL + '/draft')
+                    .then(Response => {
+                        if (Response.data.success === true) {
+                            this.data_draft = Response.data.data;
+                        } else {
+                            console.error('草稿获取失败');
+                        }
+                    })
+            },
             // 获取所有标签
             getCategory() {
                 Axios.get(this.URL + '/category').then(Response => {
@@ -231,6 +286,17 @@
                     }).then(Response => {
                         if (Response.data.success === true) {
                             this.$message.success('提交成功');
+                            if (this.$store.state.draft.id) {
+                                Axios.delete(this.URL + '/draft?id=' + this.$store.state.draft.id)
+                                    .then(Response => {
+                                        if (Response.data.success) {
+                                            
+                                        } else {
+                                            this.$message.error('删除草稿失败');
+                                        }
+                                    })
+                                this.$store.commit('IDsave', null);
+                            }
                             this.newTitle = null;
                             this.main = null;
                             this.addCategory = null;
@@ -257,6 +323,63 @@
                             this.$message.error('删除失败');
                         }
                     })
+                }
+            },
+            // 保存草稿
+            pushDraft() {
+                if (this.newTitle || this.main || this.addCategory || this.newIntroduce) {
+                    if (this.$store.state.draft.id) {
+                        Axios.put(this.URL + '/draft', qs.stringify({
+                            _id: this.$store.state.draft.id,
+                            newTitle: this.newTitle,
+                            newBody: this.main,
+                            newCategory: this.addCategory,
+                            introduce: this.newIntroduce
+                        }), {
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            }
+                        }).then(Response => {
+                            if (Response.data.success === true) {
+                                this.$message.success('更新成功');
+                                this.getDraft();
+                            } else {
+                                this.$message.error('更新失败');
+                            }
+                        })
+                    } else {
+                        Axios.post(this.URL + '/draft', {
+                            title: this.newTitle,
+                            body: this.main,
+                            category: this.addCategory,
+                            introduce: this.newIntroduce
+                        }).then(Response => {
+                            if (Response.data.success === true) {
+                                this.$message.success('保存成功');
+                                this.getDraft();
+                                this.$store.commit('IDsave', Response.data.id);
+                            } else {
+                                this.$message.error('保存失败');
+                            }
+                        })
+                    }
+                } else {
+                    this.$message.error('至少添加一项');
+                }
+            },
+            // 删除草稿
+            deleteDraft(id) {
+                let i = confirm('是否删除这份草稿？');
+                if (i) {
+                    Axios.delete(this.URL + '/draft?id=' + id)
+                        .then(Response => {
+                            if (Response.data.success === true) {
+                                this.getDraft();
+                                this.$message.success('操作成功');
+                            } else {
+                                this.$message.error('操作失败');
+                            }
+                        })
                 }
             },
             // 全局消息弹窗
@@ -286,8 +409,8 @@
                         this.loading = false
                     })
                 }
-                },
-                beforeUpload (file) {
+            },
+            beforeUpload (file) {
                 const isJPG = file.type === 'image/jpeg'
                 if (!isJPG) {
                     this.$message.error('You can only upload JPG file!')
@@ -327,16 +450,11 @@
                     }
                     return true;
                 })
-            },
-            // 保存草稿
-            // saveDraft() {
-            //     caches.open('draft').then(cache => {
-            //         cache.add()
-            //     })
-            // }
+            }
         },
         created() {
             this.getBlog();
+            this.getDraft();
             this.getCategory();
         },
         mounted() {
@@ -415,6 +533,11 @@
             .check {
                 position: absolute;
                 right: 20px;
+                bottom: 20px;
+            }
+            .save {
+                position: absolute;
+                right: 60px;
                 bottom: 20px;
             }
             .upload_label {
