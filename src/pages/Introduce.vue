@@ -1,7 +1,7 @@
 <template>
     <div id="introduce">
         <div class="container" v-bind:style="{ transform: 'translateY(-' + (pageNow - 1) * 20 + '%)' }">
-            <div class="page_1">
+            <div class="page_1" ref="page1">
                 <div class="profile">
                     <div class="img">
                         <img src="@/assets/Sidebar/profile.png" alt="" class="profile_img">
@@ -45,85 +45,91 @@
                     </div>
                 </div> -->
             </div>
-            <div class="page_2">
+            <div class="page_2" ref="page2">
                 <h2>专业技能</h2>
                 <div class="content">
                     <ul class="row">
-                        <li>
+                        <li class="HTML">
                             <div class="circle">
                                 <img src="@/assets/Introduce/html5.svg" alt="">
                                 <span>HTML5</span>
                             </div>
+                            <div class="bar"></div>
                         </li>
-                        <li>
+                        <li class="CSS">
                             <div class="circle">
                                 <img src="@/assets/Introduce/css3.svg" alt="">
                                 <span>CSS3</span>
                             </div>
+                            <div class="bar"></div>
                         </li>
-                        <li>
+                        <li class="JS">
                             <div class="circle">
                                 <img src="@/assets/Introduce/javascript.svg" alt="">
                                 <span>Javascript</span>
                             </div>
+                            <div class="bar"></div>
                         </li>
-                        <li>
+                        <li class="Bootstrap">
                             <div class="circle">
                                 <img src="@/assets/Introduce/bootstrap.svg" alt="">
                                 <span>Bootstrap</span>
                             </div>
+                            <div class="bar"></div>
                         </li>
-                    </ul>
-                    <ul class="row">
-                        <li>
+                        <li class="Sass">
                             <div class="circle">
                                 <img src="@/assets/Introduce/sass.svg" alt="">
                                 <span>Sass</span>
                             </div>
+                            <div class="bar"></div>
                         </li>
-                        <li>
+                        <li class="Vue">
                             <div class="circle">
                                 <img src="@/assets/Introduce/vuejs.svg" alt="">
                                 <span>Vue</span>
                             </div>
+                            <div class="bar"></div>
                         </li>
-                        <li>
+                        <li class="Git">
                             <div class="circle">
                                 <img src="@/assets/Introduce/git.svg" alt="">
                                 <span>Git</span>
                             </div>
+                            <div class="bar"></div>
                         </li>
-                        <li>
+                        <li class="Webpack">
                             <div class="circle">
                                 <img src="@/assets/Introduce/webpack.svg" alt="">
                                 <span>Webpack</span>
                             </div>
+                            <div class="bar"></div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="page_3">
+            <div class="page_3" ref="page3">
                 <h2>项目经历</h2>
                 <ul>
                     <li class="ERP">ERP虚拟运营系统（学生端）</li>
-                    <p><span>-&nbsp;</span>仓库地址：<a href="https://github.com/MHeroBrine/NewErp">https://github.com/MHeroBrine/NewErp</a></p>
+                    <p><span>-&nbsp;</span>仓库地址：<span class="link" @click="link('https://github.com/MHeroBrine/NewErp')">https://github.com/MHeroBrine/NewErp</span></p>
                     <p><span>-&nbsp;</span>简介：ERP系统是企业资源计划 (Enterprise Resource Planning) 的简称，是指建立在信息技术基础上，集信息技术与先进管理思想于一身，以系统化的管理思想，为企业员工及决策层提供决策手段的管理平台。系统是基于Vue2.0，配合vue-router，vuex搭建的中型项目，主要实现了市场管理、产品管理、采购管理等7个模块的功能、以及对游戏进程的控制。</p>
                     <p><span>-&nbsp;</span>技术栈：Vue2.0 + Vue-router + Vuex + Axios + Webapck + ES6</p>
                     <p><span>-&nbsp;</span>技术难点：中型项目的代码组织规划、项目组件化、游戏准备阶段的状态控制、webpack打包优化</p>
                 
                     <li class="weather">基于service worker的天气应用</li>
-                    <p><span>-&nbsp;</span>演示地址：<a href="https://mherobrine.github.io/pwaTest/">https://mherobrine.github.io/pwaTest/</a>（限手机端）</p>
+                    <p><span>-&nbsp;</span>演示地址：<span class="link" @click="link('https://mherobrine.github.io/pwaTest/')">https://mherobrine.github.io/pwaTest/</span>（限手机端）</p>
                     <p><span>-&nbsp;</span>简介：该天气应用是基于service worker实现的PWA demo，实现了应用的离线使用，在线时更新。</p>
 
                     <li class="weather">博客</li>
-                    <p><span>-&nbsp;</span>仓库地址：<a href="https://github.com/MHeroBrine/blog">https://github.com/MHeroBrine/blog</a></p>
+                    <p><span>-&nbsp;</span>仓库地址：<span class="link" @click="link('https://github.com/MHeroBrine/blog')">https://github.com/MHeroBrine/blog</span></p>
                     <p><span>-&nbsp;</span>简介：前端基于vue2.0，后端基于nodejs，数据库基于mongoDB搭建与Linux的博客，同时兼容PC端、移动设备。并且分为博客展示部分和后台管理部分。</p>
                     <p><span>-&nbsp;</span>前端技术栈：Vue2.0 + Vue-router + Vuex + Axios + Webpack + ES6</p>
                     <p><span>-&nbsp;</span>后台技术栈：Node + Express + MongoDB</p>
                     <p><span>-&nbsp;</span>服务器：CentOS</p>
                 </ul>
             </div>
-            <div class="page_4">
+            <div class="page_4" ref="page4">
                 <h2>联系作者</h2>
                 <p>Email: mherobrine@foxmail.com</p>
                 <p>QQ: 531966844</p>
@@ -136,7 +142,7 @@
 
 <script>
     import VueEvent from '../model/VueEvent'
-    
+
     export default {
         data() {
             return {
@@ -145,21 +151,101 @@
         },
         methods: {
             pageDown() {
-                this.pageNow ++;
+                if (this.pageNow < 4) {
+                    this.pageNow ++;
+                }
             },
             pageUp() {
-                this.pageNow --;
+                if (this.pageNow > 1) {
+                    this.pageNow --;
+                }
             },
             pageChange(page) {
                 this.pageNow = page;
+            },
+            link(address) {
+                window.open(address);
             }
         },
         mounted() {
+            let that = this;
+            let timeout = null;
+            let high = false;
+            let low = false;
+            let scrollFunc = function(e) {
+                let value = null;
+                e = e || window.event;
+                // console.log(that.$refs['page' + that.pageNow].scrollHeight, that.$refs['page' + that.pageNow].clientHeight, that.$refs['page' + that.pageNow].scrollTop);
+                if (that.$refs['page' + that.pageNow].scrollHeight == that.$refs['page' + that.pageNow].clientHeight + that.$refs['page' + that.pageNow].scrollTop) {
+                    low = true;
+                } else {
+                    low = false;
+                }
+                if (that.$refs['page' + that.pageNow].scrollTop == 0) {
+                    high = true;
+                } else {
+                    high = false;
+                }
+                // console.log(low, high)
+
+                value = e.wheelDelta || (e.detail * 40);
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    // console.log(value);
+                    if (value >= 120 && high) {
+                        that.pageUp()
+                    } else if (value <= -120 && low) {
+                        that.pageDown();
+                    }
+                }, 200);
+            }
+            let startY = 0,
+                endY = 0,
+                distance = 0;
+            document.addEventListener('touchstart', function(e) {
+                let touch = event.targetTouches[0];
+                startY = touch.pageY;
+            })
+            document.addEventListener('touchmove', function(e) {
+                let touch = event.targetTouches[0];
+                endY = touch.pageY;
+            })
+            document.addEventListener('touchend', function(e) {
+                distance = endY - startY;
+                console.log(that.$refs['page' + that.pageNow])
+                if (that.$refs['page' + that.pageNow].scrollHeight == that.$refs['page' + that.pageNow].clientHeight + that.$refs['page' + that.pageNow].scrollTop) {
+                    low = true;
+                } else {
+                    low = false;
+                }
+                if (that.$refs['page' + that.pageNow].scrollTop == 0) {
+                    high = true;
+                } else {
+                    high = false;
+                }
+                timeout = setTimeout(() => {
+                    if (distance > 0 && high) {
+                        that.pageUp()
+                    } else if (distance < 0 && low) {
+                        that.pageDown();
+                    }
+                }, 200);
+            })
+            document.addEventListener('DOMMouseScroll', scrollFunc, false);
+            window.onmousewheel = document.onmousewheel = scrollFunc;//IE/Opera/Chrome/Safari
+
+
             this.$store.commit('pageState', 'introduce')
             VueEvent.$on('pageChange_introduce', (page) => {
                 this.pageChange(page);
             })
             VueEvent.$emit('sidebarState', 'introduce');
+        },
+        watch: {
+            'pageNow': function(val) {
+                // console.log(val);
+                VueEvent.$emit('sidebarChange', val);
+            }
         },
         beforeDestroy() {
             VueEvent.$emit('sidebarState', 'homePage');
@@ -179,11 +265,12 @@
             .page_1 {
                 position: relative;
                 height: 20%;
+                overflow: auto;
                 background-color: #93ADDB;
                 .profile {
                     position: absolute;
                     text-align: center;
-                    top: 80px;
+                    // top: 80px;
                     left: 0;
                     right: 0;
                     bottom: 0;
@@ -212,20 +299,14 @@
                 }
                 .info {
                     position: absolute;
-                    top: 320px;
+                    // top: 300px;
                     width: 100%;
                     height: 350px;
                     padding: 30px;
-                    // text-align: right;
                     display: flex;
-                    // flex-direction: row-reverse;
                     color: #fff;
                     font-size: 16px;
                     .part_1 {
-                        flex: 1;
-                        height: 350px;
-                        line-height: 28px;
-                        padding-right: 50px;
                         p {
                             text-align: right;
                             span {
@@ -235,19 +316,16 @@
                             }
                         }
                     }
-                    .divide {
-                        flex: 0.01;
-                        border-left: 2px solid #fff;
-                    }
                     .part_2 {
                         flex: 1;
-                        padding-left: 50px;
+                        // padding-left: 50px;
                         // line-height: 20px;
                         p {
-                            width: 500px;
+                            // width: 550px;
                             margin-bottom: 0px;
-                            line-height: 30px;
+                            line-height: 28px;
                         }
+                        padding-bottom: 50px;
                     }
                 }
                 .nav {
@@ -280,7 +358,9 @@
             .page_2 {
                 position: relative;
                 height: 20%;
+                overflow: auto;
                 padding-top: 80px;
+
                 text-align: center;
                 background-color: #9C58B6;
                 h2 {
@@ -288,39 +368,156 @@
                     color: #fff;
                 }
                 .content {
-                    width: 1000px;
-                    height: 500px;
+                    width: 100%;
+                    max-width: 1000px;
+                    // height: 500px;
                     margin: 0 auto;
+                    padding-bottom: 50px;
                     .row {
                         display: flex;
-                        flex-direction: row;
-                        height: 250px;
+                        flex-direction: column;
+                        // height: 250px;
+                        padding-right: 200px;
                         li {
+                            position: relative;
                             flex: 1;
                             padding-left: 50px;
-                            padding-top: 50px;
+                            padding-top: 35px;
                             .circle {
                                 position: relative;
-                                width: 150px;
-                                height: 150px;
+                                width: 50px;
+                                height: 50px;
                                 background-color: #fff;
                                 border-radius: 50%;
                                 // text-align: center;
                                 img {
                                     position: absolute;
-                                    top: 25px;
-                                    left: 25px;
-                                    width: 100px;
+                                    top: 10px;
+                                    left: 10px;
+                                    width: 30px;
                                 }
                                 span {
                                     position: absolute;
-                                    width: 150px;
+                                    width: 50px;
                                     left: 0;
-                                    font-size: 20px;
+                                    font-size: 12px;
                                     color: #fff;
                                     text-align: center;
-                                    bottom: -35px;
+                                    bottom: -20px;
                                     
+                                }
+                            }
+                            .bar {
+                                position: absolute;
+                                left: 125px;
+                                bottom: 17px;
+                                width: 100%;
+                                max-width: 800px;
+                                box-sizing: content-box;
+                                height: 12px;
+                                border-radius: 10px;
+                                border: 1px solid #eee;
+                                background-color: #9C58B6;
+                            }
+
+                            .bar::before {
+                                content: "";
+                                position: absolute;
+                                top: 1px;
+                                left: 0;
+                                width: 80%;
+                                height: 10px;
+                                border-radius: 10px;
+                                background-color: #fff;
+                            }
+
+                            .bar::after {
+                                content: "80%";
+                                position: absolute;
+                                right: 0;
+                                top: -5px;
+                                right: -50px;
+                                color: #fff;
+                                font-weight: bold;
+                            }
+                        }
+                        .HTML {
+                            .bar {
+                                &::before {
+                                    width: 85%;
+                                }
+                                &::after {
+                                    content: '85%';
+                                }
+                            }
+                        }
+                        .CSS {
+                            .bar {
+                                &::before {
+                                    width: 80%;
+                                }
+                                &::after {
+                                    content: '80%';
+                                }
+                            }
+                        }
+                        .JS {
+                            .bar {
+                                &::before {
+                                    width: 90%;
+                                }
+                                &::after {
+                                    content: '90%';
+                                }
+                            }
+                        }
+                        .Bootstrap {
+                            .bar {
+                                &::before {
+                                    width: 70%;
+                                }
+                                &::after {
+                                    content: '70%';
+                                }
+                            }
+                        }
+                        .Sass {
+                            .bar {
+                                &::before {
+                                    width: 80%;
+                                }
+                                &::after {
+                                    content: '80%';
+                                }
+                            }
+                        }
+                        .Vue {
+                            .bar {
+                                &::before {
+                                    width: 90%;
+                                }
+                                &::after {
+                                    content: '90%';
+                                }
+                            }
+                        }
+                        .Git {
+                            .bar {
+                                &::before {
+                                    width: 70%;
+                                }
+                                &::after {
+                                    content: '70%';
+                                }
+                            }
+                        }
+                        .Webpack {
+                            .bar {
+                                &::before {
+                                    width: 80%;
+                                }
+                                &::after {
+                                    content: '80%';
                                 }
                             }
                         }
@@ -334,13 +531,20 @@
                 padding-top: 80px;
                 text-align: center;
                 background-color: #26B1B6;
+                .link {
+                    cursor: pointer;
+                    color: #AEE4FF;
+                    &:hover {
+                        color: #AEBEFF;   
+                    }
+                }
                 h2 {
                     font-size: 32px;
                     color: #fff;
                 }
                 ul {
-                    width: 1000px;
-                    margin: 50px auto 0 auto;
+                    // width: 900px;
+                    margin: 50px auto 40px auto;
                     text-align: left;
                     li {
                         color: #fff;
@@ -393,6 +597,81 @@
             right: 20px;
             bottom: 20px;
             z-index: 1000;
+        }
+    }
+
+    @media screen and (min-width: 1001px) {
+        #introduce {
+            .profile {
+                top: 80px;
+            }
+            .info {
+                top: 300px;
+                .part_1 {
+                    flex: 1;
+                    top: 20px;
+                    height: 350px;
+                    line-height: 28px;
+                    padding-right: 50px;
+                    p {
+                        text-align: center;
+                    }
+                }
+                .divide {
+                    flex: 0.01;
+                    border-left: 2px solid #fff;
+                }
+                .part_2 {
+                    padding-left: 50px;
+                    p {
+                        width: 550px;
+                    }
+                }
+            }
+            .page_3 {
+                ul {
+                    width: 900px;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+        #introduce {
+            .profile {
+                top: 40px;
+            }
+            .info {
+                top: 240px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .part_1 {
+                    top: 20px;
+                    height: 500px;
+                    line-height: 28px;
+                    p {
+                        text-align: center;
+                    }
+                }
+                .divide {
+                    width: 100%;
+                    height: 10px;
+                    border-top: 2px solid #fff;
+                    margin-bottom: 15px;
+                }
+                .part_2 {
+                    p {
+                        width: 100%;
+                    }
+                }
+            }
+            .page_3 {
+                ul {
+                    width: 100%;
+                    padding: 0 20px;
+                }
+            }
         }
     }
 </style>

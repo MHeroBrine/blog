@@ -127,6 +127,9 @@
                 this.active.message = false;
             })
             this.init();
+            VueEvent.$on('sidebarChange', function(val) {
+                that.changePage_introduce(val);
+            })
         },
         methods: {
             // 进入后台管理界面
@@ -346,7 +349,7 @@
         }
     }
 
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 1279px) {
         .sidebar_left {
             width: 0;
             height: 100%;

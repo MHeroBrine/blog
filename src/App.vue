@@ -75,7 +75,7 @@
 		
 	}
 
-	@media screen and (max-width: 1024px) {
+	@media screen and (max-width: 1280px) {
 		.sidebar_left {
 			::-webkit-scrollbar {
 				width: 0px;
